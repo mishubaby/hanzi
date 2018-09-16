@@ -1,0 +1,60 @@
+<html>
+
+<body>
+    <!-- <script>
+        const num = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
+        const arr = ["", "十", "百", "千", "万", "十", "百", "千", "亿"];
+        GetValue = (str) => {
+            var result = "";
+            const length = str.length;
+            for (var i = 0; i < length; i++) {
+                if (str.charAt(i) != "0") {
+                    result += num[str.charAt(i) * 1] + arr[length - 1 - i];
+                } else {
+                    result += "零";
+                }
+            }
+            return result;
+        }
+        var s = GetValue("00001");
+        console.log(s);
+    </script> -->
+</body>
+
+</html>
+<script>
+    function fn(n) {
+        // 判断里面是否有字母或别的
+        if(!/^\d*$/.test(n)){
+            return "数字输入有误"
+        }
+
+        var reg = new RegExp("([0]*)([1-9]+[0-9]+)", "g");
+        n = n.replace(reg, "$2")
+        // console.log(n)
+        var unit = '千百十亿千百十万千百十个';
+
+        if (n.length > unit.length) {
+            return '数据过长';
+        }
+        var newStr = '';
+        var nlength = n.length;
+        unit = unit.substr(unit.length - nlength);
+        for (var i = 0; i < nlength; i++) {
+            newStr += '零一二三四五六七八九'.charAt(n[i]) + unit.charAt(i);
+        }
+        newStr = newStr.substr(0, newStr.length - 1);
+        // $1:捕捉第一个匹配的结果
+        newStr = newStr.replace(/零(千|百|十)/g, '零').replace(/(零)+/g, '零').replace(/零(亿|万)/g, '$1');
+        for (var i = newStr.length - 1; i > 0; i--) {
+            if (newStr[i] == "零") {
+                newStr = newStr.replace(newStr[i], "")
+            } else {
+                break;
+            }
+        }
+        return newStr;
+    }
+    console.log(fn('0=10000100'));
+
+</script>
